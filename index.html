@@ -25,10 +25,7 @@
       const installedFlag = localStorage.getItem('tieba_installed');
 
       if (isPWAInstalled() || installedFlag === 'true') {
-        statusEl.textContent = `Redirecting to ${targetUrl}...`;
-        setTimeout(() => {
-          window.location.href = targetUrl;
-        }, 1000);
+        window.location.href = targetUrl;
       } else {
         statusEl.textContent = 'Please install this app to continue.';
         installBtn.style.display = 'inline-block';
