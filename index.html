@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tieba</title>
+  <link rel="manifest" href="manifest.json" />
+  <script>
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(() => console.log('Service Worker registered'));
+    }
+
+    // Redirect logic
+    window.addEventListener('DOMContentLoaded', () => {
+      const targetUrl = 'https://tieba.baidu.com';
+      document.getElementById('status').textContent = `Redirecting to ${targetUrl}...`;
+      setTimeout(() => {
+        window.location.href = targetUrl;
+      }, 1000); // Delay can be adjusted
+    });
+
+    // Optional install prompt
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      const btn = document.getElementById('install');
+      btn.style.display = 'inline-block';
+      btn.onclick = () => e.prompt();
+    });
+  </script>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 2em;
+    }
+    #install {
+      display: none;
+      padding: 0.5em 1em;
+      background-color: #0052cc;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tieba</h1>
+  <p id="status">Loading...</p>
+  <button id="install">Install App</button>
+</body>
+</html>
