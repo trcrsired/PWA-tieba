@@ -12,21 +12,31 @@
         .then(() => console.log('Service Worker registered'));
     }
 
-    // Redirect logic
+    // Detect standalone mode
+    function isPWAInstalled() {
+      return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    }
+
+    // Main flow
     window.addEventListener('DOMContentLoaded', () => {
       const targetUrl = 'https://tieba.baidu.com';
-      document.getElementById('status').textContent = `Redirecting to ${targetUrl}...`;
-      setTimeout(() => {
-        window.location.href = targetUrl;
-      }, 1000); // Delay can be adjusted
-    });
+      const statusEl = document.getElementById('status');
+      const installBtn = document.getElementById('install');
 
-    // Optional install prompt
-    window.addEventListener('beforeinstallprompt', e => {
-      e.preventDefault();
-      const btn = document.getElementById('install');
-      btn.style.display = 'inline-block';
-      btn.onclick = () => e.prompt();
+      if (isPWAInstalled()) {
+        statusEl.textContent = `Redirecting to ${targetUrl}...`;
+        setTimeout(() => {
+          window.location.href = targetUrl;
+        }, 1000);
+      } else {
+        statusEl.textContent = 'This app requires installation to continue.';
+        installBtn.style.display = 'inline-block';
+
+        window.addEventListener('beforeinstallprompt', e => {
+          e.preventDefault();
+          installBtn.onclick = () => e.prompt();
+        });
+      }
     });
   </script>
   <style>
@@ -48,7 +58,7 @@
 </head>
 <body>
   <h1>Tieba</h1>
-  <p id="status">Loading...</p>
+  <p id="status">Checking app status...</p>
   <button id="install">Install App</button>
 </body>
 </html>
