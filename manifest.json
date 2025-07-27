@@ -1,0 +1,26 @@
+{
+  "name": "PWA Player",
+  "short_name": "PWA Player",
+  "start_url": ".",
+  "background_color": "blue",
+  "theme_color": "blue",
+  "description": "A Progressive Web APP Media Player",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "icons/icon.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "/",
+      "start_in": "music",
+      "accept": {
+        "video/*": [".mp4", ".webm", ".mkv"],
+        "audio/*": [".mp3", ".wav", ".flac"]
+      }
+    }
+  ]
+}
