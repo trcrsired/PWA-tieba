@@ -1,10 +1,10 @@
 {
-  "name": "PWA Player",
-  "short_name": "PWA Player",
+  "name": "Tieba",
+  "short_name": "Tieba",
   "start_url": ".",
   "background_color": "blue",
   "theme_color": "blue",
-  "description": "A Progressive Web APP Media Player",
+  "description": "A Progressive Web APP Wrapper for Tieba",
   "display": "standalone",
   "icons": [
     {
