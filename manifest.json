@@ -12,15 +12,5 @@
       "type": "image/png",
       "sizes": "512x512"
     }
-  ],
-  "file_handlers": [
-    {
-      "action": "/",
-      "start_in": "music",
-      "accept": {
-        "video/*": [".mp4", ".webm", ".mkv"],
-        "audio/*": [".mp3", ".wav", ".flac"]
-      }
-    }
   ]
 }
