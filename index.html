@@ -12,29 +12,35 @@
         .then(() => console.log('Service Worker registered'));
     }
 
-    // Detect standalone mode
     function isPWAInstalled() {
-      return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+      return window.matchMedia('(display-mode: standalone)').matches ||
+             window.navigator.standalone === true;
     }
 
-    // Main flow
     window.addEventListener('DOMContentLoaded', () => {
       const targetUrl = 'https://tieba.baidu.com';
       const statusEl = document.getElementById('status');
       const installBtn = document.getElementById('install');
 
-      if (isPWAInstalled()) {
+      const installedFlag = localStorage.getItem('tieba_installed');
+
+      if (isPWAInstalled() || installedFlag === 'true') {
         statusEl.textContent = `Redirecting to ${targetUrl}...`;
         setTimeout(() => {
           window.location.href = targetUrl;
         }, 1000);
       } else {
-        statusEl.textContent = 'This app requires installation to continue.';
+        statusEl.textContent = 'Please install this app to continue.';
         installBtn.style.display = 'inline-block';
 
         window.addEventListener('beforeinstallprompt', e => {
           e.preventDefault();
-          installBtn.onclick = () => e.prompt();
+          installBtn.onclick = () => {
+            e.prompt();
+            localStorage.setItem('tieba_installed', 'true');
+            statusEl.textContent = 'Thanks! You can now launch Tieba from your home screen.';
+            installBtn.style.display = 'none';
+          };
         });
       }
     });
